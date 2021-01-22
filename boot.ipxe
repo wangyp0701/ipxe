@@ -1,0 +1,172 @@
+#!ipxe
+
+#自定义变量
+
+set dirpath http://mirrors.tuna.tsinghua.edu.cn
+
+set kspath http://boot.wangyp.cf
+
+
+
+#定义菜单
+
+#clear custom_choice
+
+#菜单名称
+
+menu  IPXE & wangyp0701@163.com 
+
+#菜单明细
+
+item --gap Linux series
+
+item centos8 --CentOS 8
+item centos8-ks --CentOS 8 KS
+item centos7 --CentOS 7
+item centos7-ks --CentOS 7 KS
+item ubuntu --Ubuntu 18.04
+item ubuntu-ks --Ubuntu 18.04 KS
+
+
+item --gap Windows series
+
+item win10x64 --Windows 10 x64
+item win7x64 --Windows 7 x64
+item win-server-2008-x64 --Windows 2008 x64
+item win-server-2012-x64 --Windows 2012 x64
+item win-server-2019-x64 --Windows 2019 x64
+
+
+item HardDisk --From hard disk
+
+item custom_exit --Exit
+
+#定义选择参数
+
+choose --default custom_exit --timeout 30000 custom_choice || goto custom_exit
+
+echo ${cls}
+
+goto ${custom_choice}
+
+goto custom_exit
+
+
+:centos8-ks
+initrd ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/initrd.img
+kernel ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/vmlinuz
+imgargs vmlinuz initrd=initrd.img inst.repo=${dirpath}/centos/8/BaseOS/x86_64/os ks=${kspath}/ks/ks-centos8.cfg
+boot || goto custom_exit
+
+#引导Label
+:centos8
+
+initrd ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/initrd.img
+kernel ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/vmlinuz
+imgargs vmlinuz initrd=initrd.img inst.repo=${dirpath}/centos/8/BaseOS/x86_64/os
+
+boot || goto custom_exit
+
+
+:centos7-ks
+
+kernel ${dirpath}/centos/7/os/x86_64/isolinux/vmlinuz ip=dhcp ks=${kspath}/ks/ks.cfg repo=${dirpath}/centos/7/os/x86_64
+
+initrd ${dirpath}/centos/7/os/x86_64/isolinux/initrd.img
+
+boot || goto custom_exit
+
+:centos7
+
+kernel ${dirpath}/centos/7/os/x86_64/isolinux/vmlinuz ip=dhcp repo=${dirpath}/centos/7/os/x86_64
+
+initrd ${dirpath}/centos/7/os/x86_64/isolinux/initrd.img
+
+boot || goto custom_exit
+
+:ubuntu
+        kernel ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
+        initrd ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
+        imgargs linux initrd=initrd.gz  ip=dhcp splash quiet -- 
+        boot || goto custom_exit
+#        kernel mini/linux
+#        initrd mini/initrd.gz
+#        imgargs linux initrd=initrd.gz ks=${kspath}ks.ubuntu.cfg ip=dhcp splash quiet --
+#        boot || goto custom_exit
+:ubuntu-ks
+        kernel ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
+        initrd ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
+        imgargs linux initrd=initrd.gz ks=${kspath}/ks/ks.ubuntu.cfg ip=dhcp splash quiet --
+        boot || goto custom_exit
+
+
+
+:win10x64
+
+cpuid --ext 29 && set arch amd64 || set arch x86
+  kernel wimboot
+  initrd install10.bat                                install.bat
+  initrd winpeshl.ini                               winpeshl.ini 
+  initrd boot/bcd         BCD
+  initrd boot/boot.sdi    boot.sdi
+  initrd sources/boot.wim boot.wim
+
+boot || goto custom_exit
+
+:win7x64
+
+cpuid --ext 29 && set arch amd64 || set arch x86
+  kernel wimboot
+  initrd install7.bat                                install.bat
+  initrd winpeshl.ini                               winpeshl.ini
+  initrd boot/bcd         BCD
+  initrd boot/boot.sdi    boot.sdi
+  initrd sources/boot.wim boot.wim
+
+boot || goto custom_exit
+
+:win-server-2008-x64
+
+cpuid --ext 29 && set arch amd64 || set arch x86
+  kernel wimboot
+  initrd install2008.bat                                install.bat
+  initrd winpeshl.ini                               winpeshl.ini
+  initrd boot/bcd         BCD
+  initrd boot/boot.sdi    boot.sdi
+  initrd sources/boot.wim boot.wim
+
+boot || goto custom_exit
+
+:win-server-2012-x64
+
+cpuid --ext 29 && set arch amd64 || set arch x86
+  kernel wimboot
+  initrd install2012.bat                                install.bat
+  initrd winpeshl.ini                               winpeshl.ini
+  initrd boot/bcd         BCD
+  initrd boot/boot.sdi    boot.sdi
+  initrd sources/boot.wim boot.wim
+
+boot || goto custom_exit
+
+
+:win-server-2019-x64
+
+cpuid --ext 29 && set arch amd64 || set arch x86
+  kernel wimboot
+  initrd install2019.bat                                install.bat
+  initrd winpeshl.ini                               winpeshl.ini
+  initrd boot/bcd         BCD
+  initrd boot/boot.sdi    boot.sdi
+  initrd sources/boot.wim boot.wim
+
+boot || goto custom_exit
+
+
+:custom_exit
+
+chain utils.ipxe
+
+exit
+
+
