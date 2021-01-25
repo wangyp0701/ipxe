@@ -2,9 +2,9 @@
 
 #自定义变量
 
-set dirpath http://mirrors.tuna.tsinghua.edu.cn
+set dirpath http://192.168.0.234
 
-set kspath http://boot.wangyp.cf
+set kspath ${dirpath}/
 
 
 
@@ -14,14 +14,14 @@ set kspath http://boot.wangyp.cf
 
 #菜单名称
 
-menu  IPXE & wangyp0701@163.com 
+menu YAPPAM IPXE & wangyunpeng@yappam.com
+#menu My First Menu Test
 
 #菜单明细
 
 item --gap Linux series
 
 item centos8 --CentOS 8
-item centos8-ks --CentOS 8 KS
 item centos7 --CentOS 7
 item centos7-ks --CentOS 7 KS
 item ubuntu --Ubuntu 18.04
@@ -52,35 +52,31 @@ goto ${custom_choice}
 goto custom_exit
 
 
-:centos8-ks
-initrd ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/initrd.img
-kernel ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/vmlinuz
-imgargs vmlinuz initrd=initrd.img inst.repo=${dirpath}/centos/8/BaseOS/x86_64/os ks=${kspath}/ks/ks-centos8.cfg
-boot || goto custom_exit
 
 #引导Label
 :centos8
 
-initrd ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/initrd.img
-kernel ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/vmlinuz
-imgargs vmlinuz initrd=initrd.img inst.repo=${dirpath}/centos/8/BaseOS/x86_64/os
+kernel ${dirpath}/centos8/isolinux/vmlinuz ip=dhcp repo=${dirpath}/centos8
+#/AppStream
+
+initrd ${dirpath}/centos8/isolinux/initrd.img
 
 boot || goto custom_exit
 
 
 :centos7-ks
 
-kernel ${dirpath}/centos/7/os/x86_64/isolinux/vmlinuz ip=dhcp ks=${kspath}/ks/ks.cfg repo=${dirpath}/centos/7/os/x86_64
+kernel ${dirpath}/centos7/isolinux/vmlinuz ip=dhcp ks=${kspath}ks.cfg repo=${dirpath}/centos7
 
-initrd ${dirpath}/centos/7/os/x86_64/isolinux/initrd.img
+initrd ${dirpath}/centos7/isolinux/initrd.img
 
 boot || goto custom_exit
 
 :centos7
 
-kernel ${dirpath}/centos/7/os/x86_64/isolinux/vmlinuz ip=dhcp repo=${dirpath}/centos/7/os/x86_64
+kernel ${dirpath}/centos7/isolinux/vmlinuz ip=dhcp repo=${dirpath}/centos7
 
-initrd ${dirpath}/centos/7/os/x86_64/isolinux/initrd.img
+initrd ${dirpath}/centos7/isolinux/initrd.img
 
 boot || goto custom_exit
 
@@ -96,7 +92,7 @@ boot || goto custom_exit
 :ubuntu-ks
         kernel ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
         initrd ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
-        imgargs linux initrd=initrd.gz ks=${kspath}/ks/ks.ubuntu.cfg ip=dhcp splash quiet --
+        imgargs linux initrd=initrd.gz ks=${kspath}ks.ubuntu.cfg ip=dhcp splash quiet --
         boot || goto custom_exit
 
 
