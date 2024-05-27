@@ -85,8 +85,8 @@ initrd ${dirpath}/centos/7/os/x86_64/isolinux/initrd.img
 boot || goto custom_exit
 
 :ubuntu
-        kernel ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
-        initrd ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
+        kernel ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/linux
+        initrd ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/initrd.gz
         imgargs linux initrd=initrd.gz  ip=dhcp splash quiet -- 
         boot || goto custom_exit
 #        kernel mini/linux
