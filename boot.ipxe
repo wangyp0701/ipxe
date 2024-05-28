@@ -94,10 +94,10 @@ boot || goto custom_exit
 #        imgargs linux initrd=initrd.gz ks=${kspath}ks.ubuntu.cfg ip=dhcp splash quiet --
 #        boot || goto custom_exit
 :ubuntu-ks
-        #kernel ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
-        #initrd ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
-        kernel ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/linux
-        initrd ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/initrd.gz
+        kernel ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
+        initrd ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
+        #kernel ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/linux
+        #initrd ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/initrd.gz
         imgargs linux initrd=initrd.gz ks=${kspath}/ks/ks.ubuntu.cfg ip=dhcp splash quiet --
         boot || goto custom_exit
 
