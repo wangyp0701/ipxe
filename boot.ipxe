@@ -25,7 +25,7 @@ item centos8-ks --CentOS 8 KS
 item centos7 --CentOS 7
 item centos7-ks --CentOS 7 KS
 item ubuntu --Ubuntu 20.04
-item ubuntu-ks --Ubuntu 18.04 KS
+item ubuntu-ks --Ubuntu 20.04 KS
 
 
 item --gap Windows series
@@ -94,8 +94,10 @@ boot || goto custom_exit
 #        imgargs linux initrd=initrd.gz ks=${kspath}ks.ubuntu.cfg ip=dhcp splash quiet --
 #        boot || goto custom_exit
 :ubuntu-ks
-        kernel ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
-        initrd ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
+        #kernel ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
+        #initrd ${dirpath}/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
+        kernel ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/linux
+        initrd ${dirpath}/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/initrd.gz
         imgargs linux initrd=initrd.gz ks=${kspath}/ks/ks.ubuntu.cfg ip=dhcp splash quiet --
         boot || goto custom_exit
 
