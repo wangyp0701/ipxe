@@ -65,7 +65,7 @@ initrd ${dirpath}/centos/8-stream/BaseOS/x86_64/os/images/pxeboot/initrd.img
 
 #initrd ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/initrd.img
 #kernel ${dirpath}/centos/8/BaseOS/x86_64/os/images/pxeboot/vmlinuz
-imgargs vmlinuz initrd=initrd.img inst.method=${dirpath}/centos/8-stream/BaseOS/x86_64/os inst.repo=${dirpath}/centos/8/BaseOS/x86_64/os
+imgargs vmlinuz initrd=initrd.img inst.method=${dirpath}/centos/8-stream/BaseOS/x86_64/os inst.repo=${dirpath}/centos/8-stream/BaseOS/x86_64/os
 
 boot || goto custom_exit
 
